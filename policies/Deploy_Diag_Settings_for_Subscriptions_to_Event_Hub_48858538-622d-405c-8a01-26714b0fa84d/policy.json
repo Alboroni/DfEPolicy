@@ -12,15 +12,6 @@
    "updatedOn": "2021-09-13T14:29:41.1847406Z"
   },
   "parameters": {
-   "eventHubName": {
-    "type": "String",
-    "metadata": {
-     "displayName": "EventHub Name",
-     "description": "The event hub for Azure Diagnostics",
-     "strongType": "Microsoft.EventHub/Namespaces/EventHubs",
-     "assignPermissions": true
-    }
-   },
    "eventHubRuleId": {
     "type": "String",
     "metadata": {
@@ -85,8 +76,8 @@
         "greater": 0
        },
        {
-        "field": "Microsoft.Insights/diagnosticSettings/eventHubName",
-        "equals": "[last(split(parameters('eventHubName'), '/'))]"
+        "field": "Microsoft.Insights/diagnosticSettings/eventHubAuthorizationRuleId",
+        "equals": "[parameters('EventHubRuleID')]"
        }
       ]
      },
@@ -101,10 +92,7 @@
         "$schema": "https://schema.management.azure.com/schemas/2018-05-01/subscriptionDeploymentTemplate.json#",
         "contentVersion": "1.0.0.0",
         "parameters": {
-         "eventHubName": {
-          "type": "string"
-         },
-         "eventHubRuleId": {
+          "eventHubRuleId": {
           "type": "string"
          }
         },
@@ -116,7 +104,6 @@
           "apiVersion": "2017-05-01-preview",
           "location": "Global",
           "properties": {
-           "eventHubName": "[last(split(parameters('eventHubName'), '/'))]",
            "eventHubAuthorizationRuleId": "[parameters('eventHubRuleId')]",
            "logs": [
             {
@@ -158,9 +145,6 @@
         "outputs": {}
        },
        "parameters": {
-        "eventHubName": {
-         "value": "[parameters('eventHubName')]"
-        },
         "eventHubRuleId": {
          "value": "[parameters('eventHubRuleId')]"
         }

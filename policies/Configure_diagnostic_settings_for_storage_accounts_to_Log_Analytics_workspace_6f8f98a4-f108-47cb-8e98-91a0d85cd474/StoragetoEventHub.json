@@ -82,7 +82,7 @@
     "type": "String",
     "metadata": {
      "displayName": "StorageDelete - Enabled",
-     "description": "Whether to stream StorageDelete logs to the Log Analytics workspace - True or False"
+     "description": "Whether to stream StorageDelete logs to the Event Hub- True or False"
     },
     "allowedValues": [
      "True",
@@ -94,7 +94,7 @@
     "type": "String",
     "metadata": {
      "displayName": "StorageWrite - Enabled",
-     "description": "Whether to stream StorageWrite logs to the Log Analytics workspace - True or False"
+     "description": "Whether to stream StorageWrite logs to the to the Event Hubs  - True or False"
     },
     "allowedValues": [
      "True",
@@ -106,7 +106,7 @@
     "type": "String",
     "metadata": {
      "displayName": "StorageRead - Enabled",
-     "description": "Whether to stream StorageRead logs to the Log Analytics workspace - True or False"
+     "description": "Whether to stream StorageRead logs to the to the Event Hub - True or False"
     },
     "allowedValues": [
      "True",
