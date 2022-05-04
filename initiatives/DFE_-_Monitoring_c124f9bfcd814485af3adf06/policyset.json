@@ -1,0 +1,229 @@
+{
+ "properties": {
+  "displayName": "DFE - Monitoring",
+  "policyType": "Custom",
+  "description": "Initiative Parameters:\nProfile name = Splunk_Logging_Profile\nEvent Hub Name = strongType\": \"Microsoft.EventHub/Namespaces/EventHubs\" | \"assignPermissions\": true\nEvent Hub Rule ID = \"strongType\": \"Microsoft.EventHub/Namespaces/AuthorizationRules\"\nEnable metrics = False\nEnable Logs = True\nAzure Regions = array, strong type yes, West Europe\nSecurity Centre RG Name = SecurityCenterSplunkAlerting",
+  "metadata": {
+   "category": "Monitoring",
+   "version": "1",
+   "parameterScopes": {
+    "resourceGroupLocation": "/providers/Microsoft.Management/managementGroups/DFEMG",
+    "eventHubDetails": "/subscriptions/825407bb-79de-42be-b6db-9e14fa8b52af/resourcegroups/rg-t0pc-splunkreplatform/providers/microsoft.eventhub/namespaces/eht0pc-splforwarder/eventhubs/dfe-eventhub"
+   },
+   "createdBy": "4284db2c-3e50-4550-9b4b-f40bf72b1818",
+   "createdOn": "2021-09-08T15:58:11.6064473Z",
+   "updatedBy": "4284db2c-3e50-4550-9b4b-f40bf72b1818",
+   "updatedOn": "2022-03-07T08:23:18.0475745Z"
+  },
+  "parameters": {
+   "PROFILENAME": {
+    "type": "string",
+    "metadata": {
+     "displayName": "Profile Name for Config",
+     "description": null
+    }
+   },
+   "EVENTHUBNAME": {
+    "type": "string",
+    "metadata": {
+     "displayName": "EventHub Name",
+     "description": null
+    }
+   },
+   "EVENTHUBRULEID": {
+    "type": "string",
+    "metadata": {
+     "displayName": "EventHubRuleID",
+     "description": null
+    }
+   },
+   "SECURITYCENTRERGNAME": {
+    "type": "string",
+    "metadata": {
+     "displayName": "Security Centre RG Name",
+     "description": null
+    },
+    "defaultValue": "SecurityCenterSplunkAlerting"
+   },
+   "AZUREREGIONS": {
+    "type": "array",
+    "metadata": {
+     "displayName": "Allowed Locations",
+     "strongType": "location"
+    },
+    "defaultValue": []
+   },
+   "METRICSENABLED": {
+    "type": "string",
+    "metadata": {
+     "displayName": "Enable Metrics"
+    },
+    "allowedValues": [
+     "True",
+     "False"
+    ],
+    "defaultValue": "False"
+   },
+   "LOGSENABLED": {
+    "type": "string",
+    "metadata": {
+     "displayName": "Enable Logs"
+    },
+    "allowedValues": [
+     "True",
+     "False"
+    ],
+    "defaultValue": "True"
+   }
+  },
+  "policyDefinitions": [
+   {
+    "policyDefinitionReferenceId": "Deploy Diag Settings for Front Door to Event Hub_1",
+    "policyDefinitionId": "/providers/Microsoft.Management/managementGroups/DFEMG/providers/Microsoft.Authorization/policyDefinitions/1fb7ed00-b1f9-47c3-a923-65f59afe0fb2",
+    "parameters": {
+     "profileName": {
+      "value": "[parameters('PROFILENAME')]"
+     },
+     "eventHubName": {
+      "value": "[parameters('EVENTHUBNAME')]"
+     },
+     "eventHubRuleId": {
+      "value": "[parameters('EVENTHUBRULEID')]"
+     },
+     "azureRegions": {
+      "value": "[parameters('AZUREREGIONS')]"
+     }
+    },
+    "groupNames": []
+   },
+   {
+    "policyDefinitionReferenceId": "Deploy Diag Settings for Web Sites to Event Hub_1",
+    "policyDefinitionId": "/providers/Microsoft.Management/managementGroups/DFEMG/providers/Microsoft.Authorization/policyDefinitions/2b53dd96-653b-474e-9640-7d08fc2b1b30",
+    "parameters": {
+     "profileName": {
+      "value": "[parameters('PROFILENAME')]"
+     },
+     "eventHubName": {
+      "value": "[parameters('EVENTHUBNAME')]"
+     },
+     "eventHubRuleId": {
+      "value": "[parameters('EVENTHUBRULEID')]"
+     },
+     "azureRegions": {
+      "value": "[parameters('AZUREREGIONS')]"
+     }
+    },
+    "groupNames": []
+   },
+   {
+    "policyDefinitionReferenceId": "Deploy Diag Settings for Subscriptions to Event Hub_1",
+    "policyDefinitionId": "/providers/Microsoft.Management/managementGroups/DFEMG/providers/Microsoft.Authorization/policyDefinitions/48858538-622d-405c-8a01-26714b0fa84d",
+    "parameters": {
+     "eventHubName": {
+      "value": "[parameters('EVENTHUBNAME')]"
+     },
+     "eventHubRuleId": {
+      "value": "[parameters('EVENTHUBRULEID')]"
+     }
+    },
+    "groupNames": []
+   },
+   {
+    "policyDefinitionReferenceId": "Deploy Diag Settings for NSGs to Event Hub_1",
+    "policyDefinitionId": "/providers/Microsoft.Management/managementGroups/DFEMG/providers/Microsoft.Authorization/policyDefinitions/72f07cba-fee6-4c9a-a1cb-a5ac58dc489e",
+    "parameters": {
+     "profileName": {
+      "value": "[parameters('PROFILENAME')]"
+     },
+     "eventHubName": {
+      "value": "[parameters('EVENTHUBNAME')]"
+     },
+     "eventHubRuleId": {
+      "value": "[parameters('EVENTHUBRULEID')]"
+     },
+     "azureRegions": {
+      "value": "[parameters('AZUREREGIONS')]"
+     }
+    },
+    "groupNames": []
+   },
+   {
+    "policyDefinitionReferenceId": "Deploy Diag Settings for Azure Firewalls to Event Hub_1",
+    "policyDefinitionId": "/providers/Microsoft.Management/managementGroups/DFEMG/providers/Microsoft.Authorization/policyDefinitions/8930fee7-5dfc-4fcc-af0b-9e3bb2f07238",
+    "parameters": {
+     "profileName": {
+      "value": "[parameters('PROFILENAME')]"
+     },
+     "eventHubName": {
+      "value": "[parameters('EVENTHUBNAME')]"
+     },
+     "eventHubRuleId": {
+      "value": "[parameters('EVENTHUBRULEID')]"
+     },
+     "azureRegions": {
+      "value": "[parameters('AZUREREGIONS')]"
+     }
+    },
+    "groupNames": []
+   },
+   {
+    "policyDefinitionReferenceId": "Deploy Diag Settings for KeyVaults to Event Hub_1",
+    "policyDefinitionId": "/providers/Microsoft.Management/managementGroups/DFEMG/providers/Microsoft.Authorization/policyDefinitions/b0c39a1b-b39a-403f-9aca-cbb83e45d614",
+    "parameters": {
+     "profileName": {
+      "value": "[parameters('PROFILENAME')]"
+     },
+     "eventHubName": {
+      "value": "[parameters('EVENTHUBNAME')]"
+     },
+     "eventHubRuleId": {
+      "value": "[parameters('EVENTHUBRULEID')]"
+     },
+     "azureRegions": {
+      "value": "[parameters('AZUREREGIONS')]"
+     }
+    },
+    "groupNames": []
+   },
+   {
+    "policyDefinitionReferenceId": "Deploy Diag Settings for Application Gateways to Event Hub_1",
+    "policyDefinitionId": "/providers/Microsoft.Management/managementGroups/DFEMG/providers/Microsoft.Authorization/policyDefinitions/d623a791-b9bb-4c9b-ac05-c4e40b7cf380",
+    "parameters": {
+     "profileName": {
+      "value": "[parameters('PROFILENAME')]"
+     },
+     "eventHubName": {
+      "value": "[parameters('EVENTHUBNAME')]"
+     },
+     "eventHubRuleId": {
+      "value": "[parameters('EVENTHUBRULEID')]"
+     },
+     "azureRegions": {
+      "value": "[parameters('AZUREREGIONS')]"
+     }
+    },
+    "groupNames": []
+   },
+   {
+    "policyDefinitionReferenceId": "Deploy Export Security Centre Alerts and Recommendations to Event Hub_1",
+    "policyDefinitionId": "/providers/Microsoft.Management/managementGroups/DFEMG/providers/Microsoft.Authorization/policyDefinitions/b9508fb6-7775-4d84-8711-4acef871d08a",
+    "parameters": {
+     "resourceGroupName": {
+      "value": "[parameters('SECURITYCENTRERGNAME')]"
+     },
+     "resourceGroupLocation": {
+      "value": "westeurope"
+     },
+     "eventHubDetails": {
+      "value": "/subscriptions/825407bb-79de-42be-b6db-9e14fa8b52af/resourcegroups/rg-t0pc-splunkreplatform/providers/microsoft.eventhub/namespaces/eht0pc-splforwarder/eventhubs/dfe-eventhub/authorizationrules/sec-center-in"
+     }
+    },
+    "groupNames": []
+   }
+  ],
+  "policyDefinitionGroups": []
+ },
+ "id": "/providers/Microsoft.Management/managementGroups/DFEMG/providers/Microsoft.Authorization/policySetDefinitions/c124f9bfcd814485af3adf06",
+ "type": "Microsoft.Authorization/policySetDefinitions",
+ "name": "c124f9bfcd814485af3adf06"
+}

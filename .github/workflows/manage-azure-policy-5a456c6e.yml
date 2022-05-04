@@ -1,0 +1,46 @@
+name: manage-azure-policy-5a456c6e
+on:
+  workflow_dispatch:
+    inputs:
+      remarks:
+        description: 'Reason for triggering the workflow run'
+        required: false
+        default: 'Updating Azure Policies'
+
+
+## Uncomment the following if you wish to automatically trigger workflow run with every commit
+#
+#  push:
+#    paths:
+#      - 'policies/Deploy_Diag_Settings_for_KeyVaults_to_Event_Hub_b0c39a1b-b39a-403f-9aca-cbb83e45d614/**'
+#      - 'initiatives/DFE_-_Monitoring_c124f9bfcd814485af3adf06/**'
+#      - 'policies/Deploy_Diag_Settings_for_Front_Door_to_Event_Hub_1fb7ed00-b1f9-47c3-a923-65f59afe0fb2/**'
+#      - 'policies/Deploy_Diag_Settings_for_Web_Sites_to_Event_Hub_2b53dd96-653b-474e-9640-7d08fc2b1b30/**'
+#      - 'policies/Deploy_Diag_Settings_for_Subscriptions_to_Event_Hub_48858538-622d-405c-8a01-26714b0fa84d/**'
+#      - 'policies/Deploy_Diag_Settings_for_NSGs_to_Event_Hub_72f07cba-fee6-4c9a-a1cb-a5ac58dc489e/**'
+#      - 'policies/Deploy_Diag_Settings_for_Azure_Firewalls_to_Event_Hub_8930fee7-5dfc-4fcc-af0b-9e3bb2f07238/**'
+#      - 'policies/Deploy_Diag_Settings_for_Application_Gateways_to_Event_Hub_d623a791-b9bb-4c9b-ac05-c4e40b7cf380/**'
+#      - .github/workflows/manage-azure-policy-5a456c6e.yml
+jobs:
+  apply-azure-policy:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+    - name: Login to Azure
+      uses: azure/login@v1
+      with:
+        creds: ${{secrets.AZURE_CREDENTIALS_5a456c6e}}
+        allow-no-subscriptions: true
+    - name: Create or Update Azure Policies
+      uses: azure/manage-azure-policy@v0
+      with:
+        paths: |
+          policies/Deploy_Diag_Settings_for_KeyVaults_to_Event_Hub_b0c39a1b-b39a-403f-9aca-cbb83e45d614/**
+          initiatives/DFE_-_Monitoring_c124f9bfcd814485af3adf06/**
+          policies/Deploy_Diag_Settings_for_Front_Door_to_Event_Hub_1fb7ed00-b1f9-47c3-a923-65f59afe0fb2/**
+          policies/Deploy_Diag_Settings_for_Web_Sites_to_Event_Hub_2b53dd96-653b-474e-9640-7d08fc2b1b30/**
+          policies/Deploy_Diag_Settings_for_Subscriptions_to_Event_Hub_48858538-622d-405c-8a01-26714b0fa84d/**
+          policies/Deploy_Diag_Settings_for_NSGs_to_Event_Hub_72f07cba-fee6-4c9a-a1cb-a5ac58dc489e/**
+          policies/Deploy_Diag_Settings_for_Azure_Firewalls_to_Event_Hub_8930fee7-5dfc-4fcc-af0b-9e3bb2f07238/**
+          policies/Deploy_Diag_Settings_for_Application_Gateways_to_Event_Hub_d623a791-b9bb-4c9b-ac05-c4e40b7cf380/**

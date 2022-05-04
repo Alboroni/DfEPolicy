@@ -1,0 +1,177 @@
+{
+ "properties": {
+  "displayName": "Deploy Diag Settings for Subscriptions to Event Hub",
+  "policyType": "Custom",
+  "mode": "All",
+  "description": "Ensures that Activity Log Diagnostics settings are set to push logs into Event Hub",
+  "metadata": {
+   "category": "Monitoring",
+   "createdBy": "4284db2c-3e50-4550-9b4b-f40bf72b1818",
+   "createdOn": "2021-09-08T12:17:20.5424103Z",
+   "updatedBy": "4284db2c-3e50-4550-9b4b-f40bf72b1818",
+   "updatedOn": "2021-09-13T14:29:41.1847406Z"
+  },
+  "parameters": {
+   "eventHubName": {
+    "type": "String",
+    "metadata": {
+     "displayName": "EventHub Name",
+     "description": "The event hub for Azure Diagnostics",
+     "strongType": "Microsoft.EventHub/Namespaces/EventHubs",
+     "assignPermissions": true
+    }
+   },
+   "eventHubRuleId": {
+    "type": "String",
+    "metadata": {
+     "displayName": "EventHubRuleID",
+     "description": "The event hub RuleID for Azure Diagnostics",
+     "strongType": "Microsoft.EventHub/Namespaces/AuthorizationRules",
+     "assignPermissions": true
+    }
+   }
+  },
+  "policyRule": {
+   "if": {
+    "allOf": [
+     {
+      "field": "type",
+      "equals": "Microsoft.Resources/subscriptions"
+     }
+    ]
+   },
+   "then": {
+    "effect": "deployIfNotExists",
+    "details": {
+     "type": "Microsoft.Insights/diagnosticSettings",
+     "deploymentScope": "subscription",
+     "existenceScope": "subscription",
+     "existenceCondition": {
+      "allOf": [
+       {
+        "count": {
+         "field": "Microsoft.Insights/diagnosticSettings/logs[*]",
+         "where": {
+          "allOf": [
+           {
+            "field": "Microsoft.Insights/diagnosticSettings/logs[*].enabled",
+            "equals": "true"
+           },
+           {
+            "field": "Microsoft.Insights/diagnosticSettings/logs[*].category",
+            "equals": "Security"
+           }
+          ]
+         }
+        },
+        "greater": 0
+       },
+       {
+        "count": {
+         "field": "Microsoft.Insights/diagnosticSettings/logs[*]",
+         "where": {
+          "allOf": [
+           {
+            "field": "Microsoft.Insights/diagnosticSettings/logs[*].enabled",
+            "equals": "true"
+           },
+           {
+            "field": "Microsoft.Insights/diagnosticSettings/logs[*].category",
+            "equals": "Administrative"
+           }
+          ]
+         }
+        },
+        "greater": 0
+       },
+       {
+        "field": "Microsoft.Insights/diagnosticSettings/eventHubName",
+        "equals": "[last(split(parameters('eventHubName'), '/'))]"
+       }
+      ]
+     },
+     "roleDefinitionIds": [
+      "/providers/Microsoft.Authorization/roleDefinitions/b24988ac-6180-42a0-ab88-20f7382dd24c"
+     ],
+     "deployment": {
+      "location": "westeurope",
+      "properties": {
+       "mode": "incremental",
+       "template": {
+        "$schema": "https://schema.management.azure.com/schemas/2018-05-01/subscriptionDeploymentTemplate.json#",
+        "contentVersion": "1.0.0.0",
+        "parameters": {
+         "eventHubName": {
+          "type": "string"
+         },
+         "eventHubRuleId": {
+          "type": "string"
+         }
+        },
+        "variables": {},
+        "resources": [
+         {
+          "name": "spl-activity-logs",
+          "type": "Microsoft.Insights/diagnosticSettings",
+          "apiVersion": "2017-05-01-preview",
+          "location": "Global",
+          "properties": {
+           "eventHubName": "[last(split(parameters('eventHubName'), '/'))]",
+           "eventHubAuthorizationRuleId": "[parameters('eventHubRuleId')]",
+           "logs": [
+            {
+             "category": "Administrative",
+             "enabled": true
+            },
+            {
+             "category": "Security",
+             "enabled": true
+            },
+            {
+             "category": "ServiceHealth",
+             "enabled": false
+            },
+            {
+             "category": "Alert",
+             "enabled": false
+            },
+            {
+             "category": "Recommendation",
+             "enabled": false
+            },
+            {
+             "category": "Policy",
+             "enabled": false
+            },
+            {
+             "category": "Autoscale",
+             "enabled": false
+            },
+            {
+             "category": "ResourceHealth",
+             "enabled": false
+            }
+           ]
+          }
+         }
+        ],
+        "outputs": {}
+       },
+       "parameters": {
+        "eventHubName": {
+         "value": "[parameters('eventHubName')]"
+        },
+        "eventHubRuleId": {
+         "value": "[parameters('eventHubRuleId')]"
+        }
+       }
+      }
+     }
+    }
+   }
+  }
+ },
+ "id": "/providers/Microsoft.Management/managementGroups/DFEMG/providers/Microsoft.Authorization/policyDefinitions/48858538-622d-405c-8a01-26714b0fa84d",
+ "type": "Microsoft.Authorization/policyDefinitions",
+ "name": "48858538-622d-405c-8a01-26714b0fa84d"
+}
